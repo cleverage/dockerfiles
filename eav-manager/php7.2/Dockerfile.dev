@@ -1,0 +1,29 @@
+FROM cleverage/eav-manager:php7.2
+LABEL maintainer="Jean-Yves CAMIER <jycamier@clever-age.com>"
+
+ENV PHP_INI_SCAN_DIR :/home/docker/etc/php7
+
+ENV INIT_XDEBUG_ACTIVATED 0
+ENV INIT_XDEBUG_IDEKEY PHPSTORM
+ENV INIT_XDEBUG_REMOTE_PORT 9000
+
+USER root
+
+RUN apk --update add \
+        php-xdebug@php \
+        zsh && \
+    rm -rf /var/cache/apk/* && \
+    rm -rf /etc/php7/conf.d/00_xdebug.ini && \
+    wget --output-document=/usr/bin/psysh https://psysh.org/psysh && \
+    chmod +x /usr/bin/psysh
+
+COPY devfiles /
+
+USER docker
+RUN sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" || true
+
+COPY --chown=docker:docker devhome /
+
+EXPOSE 9001
+
+
