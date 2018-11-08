@@ -22,7 +22,7 @@ if [ ${INIT_COMPOSER_INSTALL} -eq "1" ]; then
         sleep 2
     done
 
-    composer install --no-ansi --no-interaction --no-progress --optimize-autoloader --prefer-dist
+    composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
 fi
 
 ### XDEBUG ACTIVATION

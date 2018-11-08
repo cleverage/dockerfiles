@@ -17,7 +17,7 @@ if [ ${INIT_COMPOSER_INSTALL:-"0"} -eq "1" ]; then
         sleep 2
     done
 
-    composer install --no-ansi --no-interaction --no-progress --optimize-autoloader --prefer-dist
+    composer install --no-ansi --no-dev --no-interaction --no-progress --optimize-autoloader --prefer-dist
 fi
 
 exec "$@"
