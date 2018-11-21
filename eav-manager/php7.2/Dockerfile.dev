@@ -5,7 +5,7 @@ ENV PHP_INI_SCAN_DIR :/home/docker/etc/php7
 
 ENV INIT_XDEBUG_ACTIVATED 0
 ENV INIT_XDEBUG_IDEKEY PHPSTORM
-ENV INIT_XDEBUG_REMOTE_PORT 9000
+ENV INIT_XDEBUG_REMOTE_PORT 9001
 
 USER root
 
@@ -25,5 +25,3 @@ RUN sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/too
 COPY --chown=docker:docker devhome /
 
 EXPOSE 9001
-
-
