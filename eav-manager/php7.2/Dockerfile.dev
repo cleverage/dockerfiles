@@ -11,6 +11,7 @@ USER root
 
 RUN apk --update add \
         php-xdebug@php \
+        nano \
         zsh && \
     rm -rf /var/cache/apk/* && \
     rm -rf /etc/php7/conf.d/00_xdebug.ini && \
