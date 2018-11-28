@@ -12,7 +12,7 @@ export INIT_XDEBUG_IDEKEY
 ### ---
 ### - generate parameters.yml with override by environment variable
 ### - generate cache
-if [ ${INIT_COMPOSER_INSTALL} -eq "1" ]; then
+if [ "${INIT_COMPOSER_INSTALL}" -eq "1" ]; then
 
     ## Docker-sync (MacOS tool to sync code asynchronously to increase performance)
     ## Mandatory if you need to x
@@ -29,16 +29,25 @@ fi
 ### ---
 ### - dynamic configuration
 ### - active xdebug before fpm started
-if [ ${INIT_XDEBUG_ACTIVATED} -eq "1" ]; then
-    echo "zend_extension=xdebug" >> ~/etc/php7/00-xdebug.ini
-    echo "[xdebug]" >> ~/php/00-xdebug.ini
-    echo "xdebug.remote_port=${INIT_XDEBUG_REMOTE_PORT}" >> ~/etc/php7/00-xdebug.ini
-    echo "xdebug.idekey=${INIT_XDEBUG_IDEKEY}" >> ~/etc/php7/00-xdebug.ini
+if [ "${INIT_XDEBUG_ACTIVATED}" -eq "1" ]; then
 
-        if [ -z "${INIT_XDEBUG_REMOTE_HOST}" ]; then
-        echo "xdebug.remote_connect_back=1" >> ~/etc/php7/00-xdebug.ini
+    sed -i "s/xdebug\.remote_autostart\=.*/xdebug\.remote_autostart\=1/g" ~/etc/php7/00-xdebug.ini
+    sed -i "s/xdebug\.remote_enable\=.*/xdebug\.remote_enable\=1/g" ~/etc/php7/00-xdebug.ini
+
+    if [ "${INIT_XDEBUG_REMOTE_PORT}" -eq "1" ]; then
+        # Default to 9000
+        sed -i "s/xdebug\.remote_port\=.*/xdebug\.remote_port\=${INIT_XDEBUG_REMOTE_PORT}/g" ~/etc/php7/00-xdebug.ini
+    fi
+
+    if [ ${INIT_XDEBUG_IDEKEY} ]; then
+        # Default to PHPSTORM
+        sed -i "s/xdebug\.idekey\=.*/xdebug\.idekey\=${INIT_XDEBUG_IDEKEY}/g" ~/etc/php7/00-xdebug.ini
+    fi
+
+    if [ -z "${INIT_XDEBUG_REMOTE_HOST}" ]; then
+        sed -i "s/xdebug\.remote_connect_back\=.*/xdebug\.remote_connect_back\=1/g" ~/etc/php7/00-xdebug.ini
     else
-        echo "xdebug.remote_host=${INIT_XDEBUG_REMOTE_HOST}" >> ~/etc/php7/00-xdebug.ini
+        sed -i "s/#xdebug\.remote_host\=.*/xdebug\.remote_host\=${INIT_XDEBUG_REMOTE_HOST}/g" ~/etc/php7/00-xdebug.ini
     fi
 fi
 
