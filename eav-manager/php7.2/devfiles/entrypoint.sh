@@ -40,12 +40,12 @@ if [ "${INIT_XDEBUG_ACTIVATED}" -eq "1" ]; then
         sed -i "s/xdebug\.remote_port\=.*/xdebug\.remote_port\=${INIT_XDEBUG_REMOTE_PORT}/g" ~/etc/php7/00-xdebug.ini
     fi
 
-    if [ ${INIT_XDEBUG_IDEKEY} ]; then
+    if [ -n "${INIT_XDEBUG_IDEKEY}" ]; then
         # Default to PHPSTORM
         sed -i "s/xdebug\.idekey\=.*/xdebug\.idekey\=${INIT_XDEBUG_IDEKEY}/g" ~/etc/php7/00-xdebug.ini
     fi
 
-    if [ "${INIT_XDEBUG_REMOTE_HOST}" ]; then
+    if [ -n "${INIT_XDEBUG_REMOTE_HOST}" ]; then
         sed -i "s/#xdebug\.remote_host\=.*/xdebug\.remote_host\=${INIT_XDEBUG_REMOTE_HOST}/g" ~/etc/php7/00-xdebug.ini
     fi
 fi
