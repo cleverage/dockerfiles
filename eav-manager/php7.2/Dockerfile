@@ -4,6 +4,10 @@ LABEL maintainer="Jean-Yves CAMIER <jycamier@clever-age.com>"
 ARG USERID
 ARG GROUPID
 
+# Allow simple override of PHP Version
+ARG CODECAST_VERSION=3.8
+ARG PHP_VERSION=7.2
+
 ADD https://php.codecasts.rocks/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.pub
 
 ENV COMPOSER_MEMORY_LIMIT -1
@@ -18,7 +22,7 @@ WORKDIR /app
 RUN addgroup -g ${GROUPID:-1000} -S docker && \
     adduser -u ${USERID:-1000} -S docker -G docker && \
     chown docker:docker /app && \
-    echo "@php https://php.codecasts.rocks/v3.8/php-7.2" >> /etc/apk/repositories && \
+    echo "@php https://php.codecasts.rocks/v${CODECAST_VERSION}/php-${PHP_VERSION}" >> /etc/apk/repositories && \
     apk add --update \
         ca-certificates \
         wget \
