@@ -13,15 +13,6 @@ export INIT_XDEBUG_IDEKEY
 ### - generate parameters.yml with override by environment variable
 ### - generate cache
 if [ "${INIT_COMPOSER_INSTALL}" -eq "1" ]; then
-
-    ## Docker-sync (MacOS tool to sync code asynchronously to increase performance)
-    ## Mandatory if you need to x
-    while [ ! -f composer.json ] ;
-    do
-        echo "Wait for composer.json file"
-        sleep 2
-    done
-
     composer install --no-ansi --no-interaction --no-progress --optimize-autoloader
 fi
 
@@ -46,7 +37,7 @@ if [ "${INIT_XDEBUG_ACTIVATED}" -eq "1" ]; then
     fi
 
     if [ -n "${INIT_XDEBUG_REMOTE_HOST}" ]; then
-        sed -i "s/#xdebug\.remote_host\=.*/xdebug\.remote_host\=${INIT_XDEBUG_REMOTE_HOST}/g" ~/etc/php7/00-xdebug.ini
+        sed -i "s/xdebug\.remote_host\=.*/xdebug\.remote_host\=${INIT_XDEBUG_REMOTE_HOST}/g" ~/etc/php7/00-xdebug.ini
     fi
 fi
 

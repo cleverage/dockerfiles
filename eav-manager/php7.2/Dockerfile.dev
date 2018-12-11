@@ -7,8 +7,9 @@ ENV INIT_XDEBUG_ACTIVATED 0
 ENV INIT_XDEBUG_IDEKEY PHPSTORM
 ENV INIT_XDEBUG_REMOTE_PORT 9000
 
-USER root
+COPY devfiles /
 
+USER root
 RUN apk --update add \
         php-xdebug@php \
         nano \
@@ -18,11 +19,12 @@ RUN apk --update add \
     wget --output-document=/usr/bin/psysh https://psysh.org/psysh && \
     chmod +x /usr/bin/psysh
 
-COPY devfiles /
-
 USER docker
 RUN sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" || true
 
 COPY --chown=docker:docker devhome /
+
+RUN HOST_IP="$(/sbin/ip route | /usr/bin/awk 'NR==1 {print $3}')" && \
+    sed -i "s/xdebug\.remote_host\=.*/xdebug\.remote_host\=${HOST_IP}/g" /home/docker/etc/php7/00-xdebug.ini
 
 EXPOSE 9000
