@@ -7,6 +7,7 @@ export INIT_XDEBUG_ACTIVATED
 export INIT_XDEBUG_REMOTE_HOST
 export INIT_XDEBUG_REMOTE_PORT
 export INIT_XDEBUG_IDEKEY
+export INIT_PHP_ENABLED_MODULES
 
 ### INIT PROJECT WITH COMPOSER INSTALL
 ### ---
@@ -49,5 +50,11 @@ if [ "${INIT_XDEBUG_ACTIVATED}" -eq "1" ]; then
         sed -i "s/#xdebug\.remote_host\=.*/xdebug\.remote_host\=${INIT_XDEBUG_REMOTE_HOST}/g" ~/etc/php7/00-xdebug.ini
     fi
 fi
+
+## Enable php modules
+for PHP_ENABLED_MODULE in $INIT_PHP_ENABLED_MODULES
+do
+    echo "extension=${PHP_ENABLED_MODULE}.so" | tee ~/etc/php7/00-${PHP_ENABLED_MODULE}.ini
+done
 
 exec "$@"

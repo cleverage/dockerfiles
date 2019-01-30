@@ -1,3 +1,29 @@
+FROM cleverage/eav-manager:php7.2 AS builder
+
+ENV PHPIZE_DEPS \
+    autoconf \
+    dpkg-dev dpkg \
+    file \
+    g++ \
+    gcc \
+    libc-dev \
+    make \
+    pkgconf \
+    re2c
+
+USER root
+
+RUN apk --update add --no-cache \
+        ${PHPIZE_DEPS} \
+        php7-dev && \
+    ## Meminfo install
+    git clone https://github.com/BitOne/php-meminfo.git /usr/lib/php7/php-meminfo && \
+    cd /usr/lib/php7/php-meminfo/extension/php7 && \
+    phpize && \
+    ./configure --enable-meminfo && \
+    make && \
+    make install
+
 FROM cleverage/eav-manager:php7.2
 LABEL maintainer="Jean-Yves CAMIER <jycamier@clever-age.com>"
 
@@ -6,8 +32,11 @@ ENV PHP_INI_SCAN_DIR :/home/docker/etc/php7
 ENV INIT_XDEBUG_ACTIVATED 0
 ENV INIT_XDEBUG_IDEKEY PHPSTORM
 ENV INIT_XDEBUG_REMOTE_PORT 9000
+ENV INIT_PHP_ENABLED_MODULES ""
 
 USER root
+
+COPY --from=builder /usr/lib/php7/modules/meminfo.so /usr/lib/php7/modules/meminfo.so
 
 RUN apk --update add \
         php-xdebug@php \
