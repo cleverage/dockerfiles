@@ -52,7 +52,7 @@ if [ "${INIT_XDEBUG_ACTIVATED}" -eq "1" ]; then
 fi
 
 ## Enable php modules
-for PHP_ENABLED_MODULE in $INIT_PHP_ENABLED_MODULES
+for PHP_ENABLED_MODULE in ${INIT_PHP_ENABLED_MODULES}
 do
     echo "extension=${PHP_ENABLED_MODULE}.so" | tee ~/etc/php7/00-${PHP_ENABLED_MODULE}.ini
 done
