@@ -25,6 +25,7 @@ RUN addgroup -g ${GROUPID:-1000} -S docker && \
     echo "@php https://php.codecasts.rocks/v${ALPINE_VERSION}/php-${PHP_VERSION}" >> /etc/apk/repositories && \
     apk add --update \
         ca-certificates \
+        patch \
         wget \
         curl \
         vim \
