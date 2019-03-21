@@ -17,6 +17,7 @@ Clever Age's Dockerfiles
 | INIT_XDEBUG_ACTIVATED   | 0              | Active Xdebug  |
 | INIT_XDEBUG_REMOTE_PORT | 9000           | Xdebug conf    |
 | INIT_XDEBUG_IDEKEY      | PHPSTORM       | Xdebug IDEKey  |
+| INIT_XDEBUG_REMOTE_CONNECT_BACK      | 0       | Active (or not) remote connect back  |
 | INIT_XDEBUG_REMOTE_HOST | ~              | Xdebug Remote Host (if custom) |
 | INIT_COMPOSER_INSTALL   | ~              | Launch Composer install at entrypoint |
 | INIT_PHP_ENABLED_MODULES   | ~              | String of space-separated modules to enabled (for meminfo) |
