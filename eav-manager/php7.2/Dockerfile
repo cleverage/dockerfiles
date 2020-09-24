@@ -8,7 +8,7 @@ ARG GROUPID
 ARG ALPINE_VERSION=3.8
 ARG PHP_VERSION=7.2
 
-ADD https://php.codecasts.rocks/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.pub
+ADD https://dl.bintray.com/php-alpine/key/php-alpine.rsa.pub /etc/apk/keys/php-alpine.rsa.pub
 
 ENV COMPOSER_MEMORY_LIMIT -1
 ENV COMPOSER_HOME /home/docker/.composer
@@ -22,7 +22,7 @@ WORKDIR /app
 RUN addgroup -g ${GROUPID:-1000} -S docker && \
     adduser -u ${USERID:-1000} -S docker -G docker && \
     chown docker:docker /app && \
-    echo "@php https://php.codecasts.rocks/v${ALPINE_VERSION}/php-${PHP_VERSION}" >> /etc/apk/repositories && \
+    echo "@php https://dl.bintray.com/php-alpine/v${ALPINE_VERSION}/php-${PHP_VERSION}" >> /etc/apk/repositories && \
     apk add --update \
         ca-certificates \
         patch \
