@@ -68,7 +68,7 @@ RUN addgroup -g ${GROUPID:-1000} -S docker && \
         php-zlib@php && \
     ln -s /usr/bin/php7 /usr/bin/php && \
     rm -rf /var/cache/apk/* && \
-    composer global require hirak/prestissimo && \
+    mkdir -p /home/docker/.composer && \
     chown -R docker:docker /home/docker/.composer
 
 ENTRYPOINT ["/sbin/tini", "--", "/entrypoint.sh"]
